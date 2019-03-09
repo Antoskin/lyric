@@ -11,8 +11,8 @@ const client = new ApolloClient({})
 const Root = () => {
   return (
     <div>
-      Lirycs ss
-    </div>
+      Lirycs
+     </div>
   )
 };
 
