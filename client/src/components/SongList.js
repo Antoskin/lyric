@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { compose, graphql } from 'react-apollo';
+import { graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
 import { songList } from '../apollo/queries/songs'
 import { Link } from 'react-router-dom';
