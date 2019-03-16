@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { Link } from 'react-router-dom';
+import history from '../router/history';
 
 class SongCreate extends Component {
   static propTypes = {
@@ -16,15 +18,18 @@ class SongCreate extends Component {
     e.preventDefault();
     
     const { addSongMutation } = this.props;
+    const { title } = this.state;
 
-    addSongMutation({
-      variables: {
-        title: this.state.title
-      }
-    })
+    if (title) {
+      addSongMutation({
+        variables: {
+          title: this.state.title
+        }
+      }).then( () => history.push('/'))
+    }
 
     this.setState({title: ''});
-  }
+   }
 
   render() {
     const { title } = this.state
@@ -32,11 +37,16 @@ class SongCreate extends Component {
       <>
         <h3>add song</h3>
         <form onSubmit={this.handleSubmit}>
-          <input 
-            value={title}
-            onChange={ e => this.setState({ title: e.target.value }) }
-          />
-          <button>click</button>
+          <div className="form-group">
+            <label>Title</label>
+            <input 
+              value={title}
+              className="form-control"
+              onChange={ e => this.setState({ title: e.target.value }) }
+            />
+          </div>
+          <button type="submit" className="btn btn-outline-success mr-2">Create</button>
+          <Link to="/" className="btn btn-outline-warning" >Cancel</Link>
         </form>
       </>
     )

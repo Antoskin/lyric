@@ -15,11 +15,9 @@ class SongList extends Component {
     renderList() {
         const { data: { songs } } = this.props;
         return songs.map( song => (
-            <p key={song.id}>
-                <Link to={song.id} >
-                    {song.title}
-                </Link>
-            </p>
+            <div key={song.id} className="alert alert-success">
+                <p>{song.title}</p>
+            </div>
         ))
     }
 
@@ -30,6 +28,9 @@ class SongList extends Component {
         return (
             <>
                 {this.renderList()}
+                <Link to="/song/new" className="btn btn-outline-success">
+                    Add song
+                </Link>
             </>
         )
 
