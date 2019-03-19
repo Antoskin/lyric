@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-const songList = gql`
+const listOfSongs = gql`
     {
         songs {
             id
@@ -9,4 +9,4 @@ const songList = gql`
     }
 `;
 
-export { songList }
+export { listOfSongs }

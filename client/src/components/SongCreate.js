@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import history from '../router/history';
+import { addSongMutation } from '../apollo/mutation/song';
+import { listOfSongs } from '../apollo/queries/songs';
 
 class SongCreate extends Component {
   static propTypes = {
-    addSongMutation: PropTypes.func.isRequired
+    addSong: PropTypes.func.isRequired
   };
   
   state = {
@@ -17,14 +18,15 @@ class SongCreate extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     
-    const { addSongMutation } = this.props;
+    const { addSong } = this.props;
     const { title } = this.state;
 
     if (title) {
-      addSongMutation({
+      addSong({
         variables: {
           title: this.state.title
-        }
+        },
+        refetchQueries: [{ query: listOfSongs }]
       }).then( () => history.push('/'))
     }
 
@@ -53,11 +55,4 @@ class SongCreate extends Component {
   }
 }
 
-const mutation = gql`mutation AddSong($title: String) {
-    addSong(title: $title) {
-      title
-    }
-  }
-`;
-
-export default graphql(mutation, { name: 'addSongMutation' })(SongCreate);
+export default graphql(addSongMutation, { name: 'addSong' })(SongCreate);
