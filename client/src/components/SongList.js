@@ -19,12 +19,13 @@ class SongList extends Component {
     
     renderList() {
         const { data: { songs } } = this.props;
-        return songs.map( song => (
-            <div key={song.id} className="alert alert-success">
-                <p>{song.title}</p>
+        return songs.map(({id, title}) => (
+            <div key={id} className="alert alert-success">
+                <p>{title}</p>
+                <Link className="btn mr-2" to={`/song/${id}`}>more</Link>
                 <button 
                     className="btn btn-danger" 
-                    onClick={ () => this.removeSong(song.id) }>
+                    onClick={ () => this.removeSong(id) }>
                     delete
                 </button>
             </div>
@@ -47,7 +48,7 @@ class SongList extends Component {
         const { data: { loading, error } } = this.props;
         if (loading || error) return <b>wait..</b>
 
-        console.log(this.props);
+        //console.log(this.props);
 
         return (
             <>

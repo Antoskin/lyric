@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Router, Route } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import SongList from './components/SongList';
 import SongCreate from './components/SongCreate';
+import SongDetails from './components/SongDetails';
 import ApolloProvider from './apollo/ApolloProvider';
 import history from './router/history';
 
@@ -12,8 +13,11 @@ class App extends Component {
         <ApolloProvider>
           <Router history={history}>
             <div className="container app">
-              <Route exact path="/" component={SongList} />
-              <Route path="/song/new" component={SongCreate}  />
+              <Switch>
+                <Route path="/" exact component={SongList} />
+                <Route path="/song/new" component={SongCreate} />
+                <Route path="/song/:id" component={SongDetails} />
+              </Switch>
             </div>
           </Router>
         </ApolloProvider>

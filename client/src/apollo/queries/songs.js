@@ -9,4 +9,11 @@ const listOfSongs = gql`
     }
 `;
 
-export { listOfSongs }
+const fetchSong = gql`query Song($id: ID!) {
+    song(id: $id) {
+        id
+        title
+    }
+}`;
+
+export { listOfSongs, fetchSong }
