@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { compose, graphql } from 'react-apollo'
 import { fetchSong } from '../apollo/queries/songs';
-import LyricCreate from './LyricCreate';
+import { LyricCreate, LyricList } from './Lyric';
 
 class SongDetails extends Component {
 
@@ -11,7 +11,8 @@ class SongDetails extends Component {
         data: PropTypes.shape({
             song: PropTypes.shape({
                 id: PropTypes.string.isRequired,
-                title: PropTypes.string.isRequired
+                title: PropTypes.string.isRequired,
+                lyrics: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))
             })
         })
     }
@@ -31,8 +32,8 @@ class SongDetails extends Component {
 
         return (
             <>
-            
                 <p className="alert alert-success">{ song.title }</p>
+                <LyricList lyricList={song.lyrics} />
                 <LyricCreate songId={song.id} />
                 <Link to="/" className="btn btn-primary">back</Link>
             </>

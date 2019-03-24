@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { compose, graphql } from 'react-apollo'
 import PropTypes from 'prop-types';
-import { addLyricMutation } from '../apollo/mutation/song';
+import { addLyricMutation } from '../../apollo/mutation/song';
 
 class LyricCreate extends Component {
 
@@ -14,7 +14,8 @@ class LyricCreate extends Component {
         content: '',
     }
 
-    onSubmit = () => {
+    onSubmit = (e) => {
+        e.preventDefault();
         const { content } = this.state;
         const { songId, addLyric } = this.props;
 
@@ -23,7 +24,7 @@ class LyricCreate extends Component {
                 content,
                 songId
             }
-        })
+        }).then( () => this.setState({ content: '' }) )
     }
 
     inputHandler = (e) => {
@@ -32,7 +33,7 @@ class LyricCreate extends Component {
 
     render() {
         const { content } = this.state;
-        console.log(this.props)
+    
         return (
             <form onSubmit={this.onSubmit}>
                 <div className="form-group">
