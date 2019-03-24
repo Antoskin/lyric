@@ -14,7 +14,17 @@ const deleteSongMutatin = gql`mutation DeleteSong($id: ID) {
   }
 `;
 
+const addLyricMutation = gql`mutation addLyricToSong($content: String, $songId: ID) {
+  addLyricToSong(content: $content, songId: $songId) {
+    id
+    lyrics {
+      content
+    }
+  }
+}`
+
 export {
   addSongMutation,
   deleteSongMutatin,
+  addLyricMutation,
 };

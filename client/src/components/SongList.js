@@ -21,10 +21,10 @@ class SongList extends Component {
         const { data: { songs } } = this.props;
         return songs.map(({id, title}) => (
             <div key={id} className="alert alert-success">
-                <p>{title}</p>
-                <Link className="btn mr-2" to={`/song/${id}`}>more</Link>
+                <Link className="btn mr-2" to={`/song/${id}`}>{title}</Link>
                 <button 
-                    className="btn btn-danger" 
+                    className="badge badge-warning"
+                    style={{float: 'right'}}
                     onClick={ () => this.removeSong(id) }>
                     delete
                 </button>
@@ -47,8 +47,6 @@ class SongList extends Component {
     render() {
         const { data: { loading, error } } = this.props;
         if (loading || error) return <b>wait..</b>
-
-        //console.log(this.props);
 
         return (
             <>
