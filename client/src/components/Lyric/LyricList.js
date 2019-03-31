@@ -1,13 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class LyricList extends Component {
-  render() {
-    return (
-      <div>
-        lyric list:
-      </div>
-    )
-  }
-}
+const LyricList = ({ lyricList }) => 
+    lyricList.map( i => <p key={i.id}>{i.content}</p> );
 
-export default  LyricList;
+export default LyricList;
