@@ -19,7 +19,7 @@ class SongDetails extends Component {
     render() {
         const { data: { song, loading, error } } = this.props;
 
-        if(loading || !this.mounted) {
+        if(loading) {
             return (
                 <div className="d-flex justify-content-center">
                     <div className="spinner-grow" role="status">
