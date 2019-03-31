@@ -16,16 +16,6 @@ class SongDetails extends Component {
         })
     }
 
-    componentDidMount() {
-        this.mounted = true;
-    }
-
-    componentWillUnmount() {
-        this.mounted = false;
-    }
-
-    mounted = false;
-
     render() {
         const { data: { song, loading, error } } = this.props;
 
