@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { compose, graphql } from 'react-apollo'
 import { fetchSong } from '../apollo/queries/songs';
 import { LyricCreate, LyricList } from './Lyric';
 
 class SongDetails extends Component {
-
     static propTypes = {
         data: PropTypes.shape({
             song: PropTypes.shape({
@@ -18,7 +17,7 @@ class SongDetails extends Component {
     }
 
     render() {
-        const { data: { song, loading } } = this.props;
+        const { data: { song, loading, error } } = this.props;
 
         if(loading) {
             return (
@@ -29,6 +28,12 @@ class SongDetails extends Component {
                 </div>
             )
         }
+        
+        if(!song) {
+            return <p>error</p>;
+        }
+
+        console.log(this.props);
 
         return (
             <>
@@ -41,8 +46,11 @@ class SongDetails extends Component {
     }
 }
 
-export default graphql(fetchSong, { 
-    options: ({ match: { params } }) => ({ 
-        variables: { id: params.id } 
-    }) 
-})(SongDetails);
+export default compose(
+    graphql(fetchSong, { 
+        options: ({ match: { params } }) => ({ 
+            variables: { id: params.id } 
+        }) 
+    }),
+    withRouter,
+)(SongDetails);

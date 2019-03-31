@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { addLyricMutation } from '../../apollo/mutation/song';
 
 class LyricCreate extends Component {
-
     static propTypes = {
         addLyric: PropTypes.func.isRequired,
         songId: PropTypes.string.isRequired,
@@ -13,6 +12,10 @@ class LyricCreate extends Component {
     state = {
         content: '',
     }
+
+    inputHandler = (e) => {
+        this.setState({content: e.target.value})
+    } 
 
     onSubmit = (e) => {
         e.preventDefault();
@@ -23,13 +26,9 @@ class LyricCreate extends Component {
             variables: {
                 content,
                 songId
-            }
+            },
         }).then( () => this.setState({ content: '' }) )
     }
-
-    inputHandler = (e) => {
-        this.setState({content: e.target.value})
-    } 
 
     render() {
         const { content } = this.state;
@@ -38,12 +37,19 @@ class LyricCreate extends Component {
             <form onSubmit={this.onSubmit}>
                 <div className="form-group">
                     <label>add lyric:</label>
-                    <input 
-                        type="" 
-                        className="form-control" 
-                        value={content}
-                        onChange={ this.inputHandler }
-                    />
+                    <div className="row">
+                        <div className="col-7">
+                        <input 
+                            type="" 
+                            className="form-control" 
+                            value={content}
+                            onChange={ this.inputHandler }
+                        />
+                        </div>
+                        <div className="col-5">
+                            <button className="btn btn-success pr-3 pl-3">add</button>
+                        </div>
+                    </div>
                 </div>
             </form>
         )
