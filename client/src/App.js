@@ -12,7 +12,7 @@ class App extends Component {
     return (
         <ApolloProvider>
           <Router history={history}>
-            <div className="container app">
+            <div className="container app mt-4">
               <Switch>
                 <Route path="/" exact component={SongList} />
                 <Route path="/song/new" component={SongCreate} />

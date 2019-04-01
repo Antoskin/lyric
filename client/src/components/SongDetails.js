@@ -12,14 +12,20 @@ class SongDetails extends Component {
                 id: PropTypes.string.isRequired,
                 title: PropTypes.string.isRequired,
                 lyrics: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))
-            })
+            }),
+            startPolling: PropTypes.func.isRequired,
+            stopPolling: PropTypes.func.isRequired,
         })
+    }
+
+    componentDidMount() {
+        //const { data: { startPolling, stopPolling, song } } = this.props;
     }
 
     render() {
         const { data: { song, loading, error } } = this.props;
 
-        if(loading) {
+        if(loading || !song) {
             return (
                 <div className="d-flex justify-content-center">
                     <div className="spinner-grow" role="status">
@@ -28,18 +34,12 @@ class SongDetails extends Component {
                 </div>
             )
         }
-        
-        if(!song) {
-            return <p>error</p>;
-        }
-
-        console.log(this.props);
 
         return (
             <>
-                <p className="alert alert-success">{ song.title }</p>
+                <h2 className="alert alert-success">-{ song.title }</h2>
                 <LyricList lyricList={song.lyrics} />
-                <LyricCreate songId={song.id} />
+                <LyricCreate data={this.props.data} />
                 <Link to="/" className="btn btn-primary">back</Link>
             </>
         )
@@ -48,8 +48,9 @@ class SongDetails extends Component {
 
 export default compose(
     graphql(fetchSong, { 
-        options: ({ match: { params } }) => ({ 
-            variables: { id: params.id } 
+        options: ({ match: { params } }) => ({
+            variables: { id: params.id },
+            //fetchPolicy: 'network-only',
         }) 
     }),
     withRouter,

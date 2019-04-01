@@ -6,11 +6,35 @@ import { addLyricMutation } from '../../apollo/mutation/song';
 class LyricCreate extends Component {
     static propTypes = {
         addLyric: PropTypes.func.isRequired,
-        songId: PropTypes.string.isRequired,
+        data: PropTypes.shape({
+            song: PropTypes.shape({
+                id: PropTypes.string.isRequired,
+                
+            }),
+            startPolling: PropTypes.func,
+            stopPolling: PropTypes.func,
+        })
+    }
+
+    static defaultProps = {
+        data: {
+            stopPolling: null
+        }
     }
 
     state = {
         content: '',
+        loading: false,
+    }
+
+    componentDidMount() { 
+        //const { data: { startPolling, stopPolling } } = this.props;
+
+        this._ismounted = true;
+    }
+      
+    componentWillUnmount() {
+        this._ismounted = false;
     }
 
     inputHandler = (e) => {
@@ -20,15 +44,23 @@ class LyricCreate extends Component {
     onSubmit = (e) => {
         e.preventDefault();
         const { content } = this.state;
-        const { songId, addLyric } = this.props;
+        const { data: { song, startPolling }, addLyric } = this.props;
 
         addLyric({
             variables: {
                 content,
-                songId
-            },
-        }).then( () => this.setState({ content: '' }) )
+                songId: song.id
+            }
+        }).then( () => {
+            if(this._ismounted) {
+                this.setState({ content: '' }) 
+            }
+
+            startPolling(200);
+        })
     }
+
+    _ismounted = false;
 
     render() {
         const { content } = this.state;
@@ -36,15 +68,15 @@ class LyricCreate extends Component {
         return (
             <form onSubmit={this.onSubmit}>
                 <div className="form-group">
-                    <label>add lyric:</label>
                     <div className="row">
-                        <div className="col-7">
-                        <input 
-                            type="" 
-                            className="form-control" 
-                            value={content}
-                            onChange={ this.inputHandler }
-                        />
+                        <div className="col-5 d-flex">
+                            <span className="mr-3 mt-1">lyric:</span>
+                            <input 
+                                type="" 
+                                className="form-control" 
+                                value={content}
+                                onChange={ this.inputHandler }
+                            />
                         </div>
                         <div className="col-5">
                             <button className="btn btn-success pr-3 pl-3">add</button>
