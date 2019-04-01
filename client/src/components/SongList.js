@@ -45,6 +45,7 @@ class SongList extends Component {
     }
 
     render() {
+        console.log(this.props);
         const { data: { loading, error } } = this.props;
         if (loading || error) return <b>wait..</b>
 
