@@ -1,21 +1,22 @@
 import React, { Component } from 'react'
 import { ApolloProvider as ReactApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-boost';
+import PropTypes from 'prop-types';
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
 })
 
-class ApolloProvider extends Component {
-  render() {
-    return (
-      <>
-        <ReactApolloProvider client={client}>
-            {this.props.children}
-        </ReactApolloProvider>
-      </>
-    )
-  }
-}
+const ApolloProvider = ({children}) => (
+  <>
+    <ReactApolloProvider client={client}>
+        {children}
+    </ReactApolloProvider>
+  </>
+)
+
+ApolloProvider.propTypes = {
+  children: PropTypes.node
+};
 
 export default ApolloProvider;

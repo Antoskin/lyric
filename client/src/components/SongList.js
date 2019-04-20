@@ -40,12 +40,9 @@ class SongList extends Component {
                id
            }
        }).then( () => refetch() )
-
-       console.log('deleted')
     }
 
     render() {
-        console.log(this.props);
         const { data: { loading, error } } = this.props;
         if (loading || error) return <b>wait..</b>
 

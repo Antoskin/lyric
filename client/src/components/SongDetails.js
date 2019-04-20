@@ -13,13 +13,7 @@ class SongDetails extends Component {
                 title: PropTypes.string.isRequired,
                 lyrics: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))
             }),
-            startPolling: PropTypes.func.isRequired,
-            stopPolling: PropTypes.func.isRequired,
         })
-    }
-
-    componentDidMount() {
-        //const { data: { startPolling, stopPolling, song } } = this.props;
     }
 
     render() {
