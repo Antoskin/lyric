@@ -28,8 +28,6 @@ class LyricCreate extends Component {
     }
 
     componentDidMount() { 
-        //const { data: { startPolling, stopPolling } } = this.props;
-
         this._ismounted = true;
     }
       
